@@ -18,6 +18,7 @@ void StartScene::draw()
 {
 	m_pStartLabel->draw();
 	m_pStartButton->draw();
+	m_pExitButton->draw();
 	
 }
 
@@ -25,6 +26,8 @@ void StartScene::update()
 {
 	m_pStartButton->setMousePosition(m_mousePosition);
 	m_pStartButton->ButtonClick();
+	m_pStartButton->setMousePosition(m_mousePosition);
+	m_pExitButton->ButtonClick();
 }
 
 void StartScene::clean()
@@ -55,6 +58,8 @@ void StartScene::handleEvents()
 			{
 			case SDL_BUTTON_LEFT:
 				m_pStartButton->setMouseButtonClicked(true);
+				m_pExitButton->setMouseButtonClicked(true);
+
 				break;
 			}
 
@@ -64,6 +69,7 @@ void StartScene::handleEvents()
 			{
 			case SDL_BUTTON_LEFT:
 				m_pStartButton->setMouseButtonClicked(false);
+				m_pExitButton->setMouseButtonClicked(false);
 				break;
 			}
 			break;
@@ -105,6 +111,11 @@ void StartScene::start()
 	m_pStartButton = new StartButton();
 	m_pStartButton->setPosition(glm::vec2(Config::SCREEN_WIDTH * 0.5f, Config::SCREEN_HEIGHT * 0.5f));
 	addChild(m_pStartButton);
+
+	m_pExitButton = new ExitButton();
+	m_pExitButton->setPosition(glm::vec2(250.0f,350.0f));
+	addChild(m_pExitButton);
+	
 }
 
 glm::vec2 StartScene::getMousePosition()

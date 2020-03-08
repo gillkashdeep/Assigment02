@@ -3,6 +3,9 @@
 #define __LEVEL_1_SCENE__
 
 #include "Scene.h"
+#include "Ground.h"
+#include <SDL.h>
+#include "Label.h"
 
 class Level1Scene : public Scene
 {
@@ -22,7 +25,21 @@ public:
 private:
 	// game objects
 
-
+	DisplayObject* m_pGround;
+	DisplayObject* m_pGroundSurface;
+	DisplayObject* m_pDoor;
+	SDL_Renderer* renderer;
+	SDL_Window* window;
+	
+	DisplayObject* m_pCoin;
+	DisplayObject* m_pCoin_1;
+	DisplayObject* m_pCoin_2;
+	DisplayObject* m_pCoin_3;
+	DisplayObject* m_pCoin_4;
+	Label* m_pLabel;
+	Label* m_pLabel1;
+	
+	
 
 	// private data member
 	glm::vec2 m_mousePosition;
@@ -30,4 +47,4 @@ private:
 	
 };
 
-#endif /* defined (__LEVEL_1_SCENE__) */
+#endif 

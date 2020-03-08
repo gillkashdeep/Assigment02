@@ -19,6 +19,7 @@ bool StartButton::ButtonClick()
 {
 	if (m_mouseOver() && m_mouseButtonClicked)
 	{
+		
 		if(!m_isClicked)
 		{
 			Game::Instance()->changeSceneState(LEVEL1_SCENE);
