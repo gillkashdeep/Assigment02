@@ -5,9 +5,9 @@ ExitButton::ExitButton()
 
 // call super constructor
 	:Button(
-		"../Assets/textures/StartButton_1.png",
+		"../Assets/textures/ExitButton.png",
 		"exitButton",
-		EXIT_BUTTON, glm::vec2(400.0f, 300.0f)), m_isClicked(false)
+		EXIT_BUTTON, glm::vec2(440.0f, 300.0f)), m_isClicked(false)
 {
 }
 
@@ -22,7 +22,7 @@ bool ExitButton::ButtonClick()
 
 		if (!m_isClicked)
 		{
-			Game::Instance()->changeSceneState(END_SCENE);
+			TheGame::Instance()->quit();
 			m_isClicked = true;
 			
 		}

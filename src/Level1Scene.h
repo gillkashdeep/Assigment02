@@ -6,6 +6,8 @@
 #include "Ground.h"
 #include <SDL.h>
 #include "Label.h"
+#include "Player.h"
+#include "GroundSurface.h"
 
 class Level1Scene : public Scene
 {
@@ -18,15 +20,15 @@ public:
 	void clean() override;
 	void handleEvents() override;
 	void start() override;
-
+	bool playerIsGrounded();
 	// getters
 	glm::vec2 getMousePosition();
 
 private:
 	// game objects
 
-	DisplayObject* m_pGround;
-	DisplayObject* m_pGroundSurface;
+	Ground* m_pGround;
+	GroundSurface* m_pGroundSurface;
 	DisplayObject* m_pDoor;
 	SDL_Renderer* renderer;
 	SDL_Window* window;
@@ -38,8 +40,12 @@ private:
 	DisplayObject* m_pCoin_4;
 	Label* m_pLabel;
 	Label* m_pLabel1;
-	
-	
+	Player* m_pPlayer;
+
+	bool isCoinCollected;
+	bool isCoinCollected_1;
+	bool isCoinCollected_2;
+	bool isPlayerReach;
 
 	// private data member
 	glm::vec2 m_mousePosition;

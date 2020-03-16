@@ -18,32 +18,78 @@ Level1Scene::~Level1Scene()
 void Level1Scene::draw()
 {
 	m_pGround->draw();
-	m_pCoin->draw();
-	m_pCoin_1->draw();
-	m_pCoin_1->draw();
-	m_pCoin_2->draw();
-	m_pCoin_3->draw();
-	m_pCoin_4->draw();
+	
+		m_pCoin->draw();
+		m_pCoin_1->draw();
+	
+	if (!isCoinCollected)
+		m_pCoin_2->draw();
+	
+	if (!isCoinCollected_1)
+		m_pCoin_3->draw();
+	
+	if (!isCoinCollected_2)
+		m_pCoin_4->draw();
+	
 	m_pGroundSurface->draw();
 	m_pDoor->draw();
 	m_pLabel->draw();
 	m_pLabel1->draw();
-
+	if(!isPlayerReach)
+		m_pPlayer->draw();
 }
 
 void Level1Scene::update()
 {
-
-	m_pGround->setPosition(glm::vec2(170, 200));
-	m_pGroundSurface->setPosition(glm::vec2(170, 350));
-	m_pCoin->setPosition(glm::vec2(200, 150));
-	m_pCoin_1->setPosition(glm::vec2(50, 150));
-	m_pCoin_2->setPosition(glm::vec2(50, 300));
-	m_pCoin_3->setPosition(glm::vec2(250, 300));
-	m_pCoin_4->setPosition(glm::vec2(450, 300));
-	m_pDoor->setPosition(glm::vec2(610, 308));
+	auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 22);
+	//Collision::lineRectCheck(m_pPlayer, bottomLine,m_pGround, m_pGround->getWidth(), m_pGround->getHeight());
+	Collision::lineRectCheck(m_pPlayer, bottomLine, m_pGroundSurface, m_pGroundSurface->getWidth(), m_pGroundSurface->getHeight());
 	
+	m_pPlayer->isGrounded = playerIsGrounded();
+	m_pPlayer->update();
+	//std::cout << m_pPlayer->isGrounded << std::endl;
+	if(CollisionManager::AABBCheck(m_pPlayer, m_pCoin_2))
+	{
+		isCoinCollected = true;
+		m_pLabel->setText("1");
+		
+	}
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pCoin_3))
+	{
+		isCoinCollected_1 = true;
+		m_pLabel->setText("2");
 
+
+	}
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pCoin_4))
+	{
+		isCoinCollected_2 = true;
+		m_pLabel->setText("3");
+
+
+	}
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pDoor))
+	{
+		
+		isPlayerReach = true;
+		TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
+
+
+	}
+	
+}
+bool Level1Scene::playerIsGrounded()
+{
+	if(m_pGround->playerAtGround == true)
+	{
+		return true;
+	}
+	if(m_pGroundSurface->playerAtGround == true)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void Level1Scene::clean()
@@ -103,16 +149,21 @@ void Level1Scene::handleEvents()
 
 				/************************************************************************/
 			case SDLK_w:
-				
+				if (m_pPlayer->isGrounded)
+				{
+					m_pPlayer->jump();
+
+				}
 				break;
 			case SDLK_s:
 				
 				break;
 			case SDLK_a:
+				m_pPlayer->move(LEFT);
 
 				break;
 			case SDLK_d:
-
+				m_pPlayer->move(RIGHT);
 				break;
 			}
 			
@@ -121,7 +172,7 @@ void Level1Scene::handleEvents()
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_w:
-				
+				//m_pPlayer->stopJump();
 				break;
 
 			case SDLK_s:
@@ -129,9 +180,11 @@ void Level1Scene::handleEvents()
 				break;
 
 			case SDLK_a:
+				m_pPlayer->setVelocity(glm::vec2(0, m_pPlayer->getVelocity().y));
 
 				break;
 			case SDLK_d:
+				m_pPlayer->setVelocity(glm::vec2(0, m_pPlayer->getVelocity().y));
 
 				break;
 			}
@@ -158,26 +211,26 @@ void Level1Scene::start()
 	addChild(m_pGroundSurface);
 	
 	m_pCoin= new  coin();
-	m_pCoin->setPosition(glm::vec2(200.0f, 250.0f));
+	m_pCoin->setPosition(glm::vec2(200, 150));
 	addChild(m_pCoin);
 
 	m_pCoin_1 = new  coin();
-	m_pCoin_1->setPosition(glm::vec2(250.0f, 250.0f));
+	m_pCoin_1->setPosition(glm::vec2(50, 150));
 	addChild(m_pCoin_1);
 
 
 	m_pCoin_2 = new  coin();
-	m_pCoin_2->setPosition(glm::vec2(250.0f, 250.0f));
+	m_pCoin_2->setPosition(glm::vec2(90, 300));
 	addChild(m_pCoin_2);
 
 
 	m_pCoin_3 = new  coin();
-	m_pCoin_3->setPosition(glm::vec2(250.0f, 250.0f));
+	m_pCoin_3->setPosition(glm::vec2(250, 300));
 	addChild(m_pCoin_3);
 
 
 	m_pCoin_4 = new  coin();
-	m_pCoin_4->setPosition(glm::vec2(250.0f, 250.0f));
+	m_pCoin_4->setPosition(glm::vec2(450, 300));
 	addChild(m_pCoin_4);
 
 	m_pDoor = new  door();
@@ -185,7 +238,7 @@ void Level1Scene::start()
 	addChild(m_pDoor);
 
 	SDL_Color black = { 255, 255, 255, 255 };
-	m_pLabel = new Label("1", "Consolas", 20, black,
+	m_pLabel = new Label("0", "Consolas", 20, black,
 		glm::vec2(550.0f, 80.0f));
 	m_pLabel->setParent(this);
 	addChild(m_pLabel);
@@ -195,11 +248,23 @@ void Level1Scene::start()
 	m_pLabel1->setParent(this);
 	addChild(m_pLabel);
 
+	m_pPlayer = new Player();
+	//m_pPlayer->setPosition(glm::vec2(30.0f, 250.0f));
+	addChild(m_pPlayer);
+	
+	m_pPlayer->setPosition(glm::vec2(30, 290));
+	m_pGround->setPosition(glm::vec2(170, 200));
+	m_pGroundSurface->setPosition(glm::vec2(170, 350));
 
 	
-
-
 	
+	
+	m_pDoor->setPosition(glm::vec2(610, 308));
+
+	isCoinCollected = false;
+	isCoinCollected_1 = false;
+	isCoinCollected_2 = false;
+	isPlayerReach = false;
 }
 
 glm::vec2 Level1Scene::getMousePosition()

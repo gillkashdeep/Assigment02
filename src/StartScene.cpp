@@ -19,6 +19,7 @@ void StartScene::draw()
 	m_pStartLabel->draw();
 	m_pStartButton->draw();
 	m_pExitButton->draw();
+	m_pInstButton->draw();
 	
 }
 
@@ -26,8 +27,10 @@ void StartScene::update()
 {
 	m_pStartButton->setMousePosition(m_mousePosition);
 	m_pStartButton->ButtonClick();
-	m_pStartButton->setMousePosition(m_mousePosition);
+	m_pExitButton->setMousePosition(m_mousePosition);
 	m_pExitButton->ButtonClick();
+	m_pInstButton->setMousePosition(m_mousePosition);
+	m_pInstButton->ButtonClick();
 }
 
 void StartScene::clean()
@@ -59,7 +62,7 @@ void StartScene::handleEvents()
 			case SDL_BUTTON_LEFT:
 				m_pStartButton->setMouseButtonClicked(true);
 				m_pExitButton->setMouseButtonClicked(true);
-
+				m_pInstButton->setMouseButtonClicked(true);
 				break;
 			}
 
@@ -70,6 +73,7 @@ void StartScene::handleEvents()
 			case SDL_BUTTON_LEFT:
 				m_pStartButton->setMouseButtonClicked(false);
 				m_pExitButton->setMouseButtonClicked(false);
+				m_pInstButton->setMouseButtonClicked(false);
 				break;
 			}
 			break;
@@ -90,6 +94,10 @@ void StartScene::handleEvents()
 			case SDLK_2:
 				TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
 				break;
+			case SDLK_3:
+				TheGame::Instance()->changeSceneState(SceneState::INST_SCENE);
+				break;
+				
 			}
 			break;
 
@@ -103,7 +111,7 @@ void StartScene::handleEvents()
 void StartScene::start()
 {
 	SDL_Color black = { 0, 0, 0, 255 };
-	m_pStartLabel = new Label("COMP397 - Midterm Test", "Consolas", 40, black, 
+	m_pStartLabel = new Label("COMP397 - Assigment 2", "Consolas", 40, black, 
 		glm::vec2(Config::SCREEN_WIDTH * 0.5f, 100.0f));
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
@@ -112,8 +120,12 @@ void StartScene::start()
 	m_pStartButton->setPosition(glm::vec2(Config::SCREEN_WIDTH * 0.5f, Config::SCREEN_HEIGHT * 0.5f));
 	addChild(m_pStartButton);
 
+	m_pInstButton = new InstructionButton();
+	m_pInstButton->setPosition(glm::vec2(320.0f, 310.0f));
+	addChild(m_pInstButton);
+	
 	m_pExitButton = new ExitButton();
-	m_pExitButton->setPosition(glm::vec2(250.0f,350.0f));
+	m_pExitButton->setPosition(glm::vec2(320.0f,390.0f));
 	addChild(m_pExitButton);
 	
 }
