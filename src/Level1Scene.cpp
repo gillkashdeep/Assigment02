@@ -5,6 +5,7 @@
 #include "coin.h"
 #include "GroundSurface.h"
 #include "door.h"
+int one, two, three, four, five,total;
 
 Level1Scene::Level1Scene()
 {
@@ -42,29 +43,40 @@ void Level1Scene::draw()
 void Level1Scene::update()
 {
 	auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 22);
-	//Collision::lineRectCheck(m_pPlayer, bottomLine,m_pGround, m_pGround->getWidth(), m_pGround->getHeight());
+	Collision::lineRectCheck(m_pPlayer, bottomLine,m_pGround, m_pGround->getWidth(), m_pGround->getHeight());
 	Collision::lineRectCheck(m_pPlayer, bottomLine, m_pGroundSurface, m_pGroundSurface->getWidth(), m_pGroundSurface->getHeight());
 	
-	m_pPlayer->isGrounded = playerIsGrounded();
+	playerIsGrounded();
 	m_pPlayer->update();
 	//std::cout << m_pPlayer->isGrounded << std::endl;
+
+	if(m_pPlayer->getPosition().x < 10)
+	{
+		//std::cout << "positionset" << std::endl;
+		m_pPlayer->update();
+	}
 	if(CollisionManager::AABBCheck(m_pPlayer, m_pCoin_2))
 	{
+		one = 1;
 		isCoinCollected = true;
-		m_pLabel->setText("1");
+		TheSoundManager::Instance()->playSound("yay", 0);
 		
 	}
 	if (CollisionManager::AABBCheck(m_pPlayer, m_pCoin_3))
 	{
 		isCoinCollected_1 = true;
-		m_pLabel->setText("2");
+		//m_pLabel->setText("2");
+		two = 1;
+		TheSoundManager::Instance()->playSound("yay", 0);
 
 
 	}
 	if (CollisionManager::AABBCheck(m_pPlayer, m_pCoin_4))
 	{
 		isCoinCollected_2 = true;
-		m_pLabel->setText("3");
+		//m_pLabel->setText("3");
+		three = 1;
+		TheSoundManager::Instance()->playSound("yay", 0);
 
 
 	}
@@ -72,21 +84,39 @@ void Level1Scene::update()
 	{
 		
 		isPlayerReach = true;
+		one = 0;
+		two = 0;
+		three = 0;
+		total = one+two+three;
+		m_pLabel->setText(std::to_string(total));
+
 		TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
 
 
 	}
+	total = one + two + three + four + five;
+
+	
+	if(!isPlayerReach)
+	{
+		m_pLabel->setText(std::to_string(total));
+	}
+	
+	
+
 	
 }
 bool Level1Scene::playerIsGrounded()
 {
 	if(m_pGround->playerAtGround == true)
 	{
-		return true;
+		m_pPlayer->isGrounded = true;
+		m_pPlayer->isGroundSurfaced = false;
 	}
 	if(m_pGroundSurface->playerAtGround == true)
 	{
-		return true;
+		m_pPlayer->isGrounded = false;
+		m_pPlayer->isGroundSurfaced = true;
 	}
 
 	return false;
@@ -149,7 +179,7 @@ void Level1Scene::handleEvents()
 
 				/************************************************************************/
 			case SDLK_w:
-				if (m_pPlayer->isGrounded)
+				if (m_pPlayer->isGroundSurfaced)
 				{
 					m_pPlayer->jump();
 
@@ -243,7 +273,7 @@ void Level1Scene::start()
 	m_pLabel->setParent(this);
 	addChild(m_pLabel);
 
-	m_pLabel1 = new Label("Items Collected:", "Consolas", 20, black,
+	m_pLabel1 = new Label("Coins Collected:", "Consolas", 20, black,
 		glm::vec2(440.0f, 80.0f));
 	m_pLabel1->setParent(this);
 	addChild(m_pLabel);
@@ -252,19 +282,22 @@ void Level1Scene::start()
 	//m_pPlayer->setPosition(glm::vec2(30.0f, 250.0f));
 	addChild(m_pPlayer);
 	
-	m_pPlayer->setPosition(glm::vec2(30, 290));
+	m_pPlayer->setPosition(glm::vec2(30, 270));
 	m_pGround->setPosition(glm::vec2(170, 200));
 	m_pGroundSurface->setPosition(glm::vec2(170, 350));
 
-	
-	
-	
+	TheSoundManager::Instance()->load("../Assets/audio/yay.ogg", "yay", SOUND_SFX);
+	TheSoundManager::Instance()->load("../Assets/audio/Interstellar Odyssey.ogg", "bg", SOUND_SFX);
+	TheSoundManager::Instance()->playSound("bg", 1);
+
 	m_pDoor->setPosition(glm::vec2(610, 308));
 
 	isCoinCollected = false;
 	isCoinCollected_1 = false;
 	isCoinCollected_2 = false;
 	isPlayerReach = false;
+
+	
 }
 
 glm::vec2 Level1Scene::getMousePosition()

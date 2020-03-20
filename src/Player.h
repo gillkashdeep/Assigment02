@@ -41,7 +41,7 @@ public:
 	bool onShadow;
 
 	bool isGrounded;
-
+	bool isGroundSurfaced;
 
 	float initialJumpVelocity = 100;
 

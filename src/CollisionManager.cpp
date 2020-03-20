@@ -146,6 +146,7 @@ bool CollisionManager::lineRectCheck(Player* player, glm::vec2 line1End, Ground*
 
 
 		player->stopJump(glm::vec2(player->getPosition().x, ground->getPosition().y - recHeight * 3 / 4));
+		player->isGroundSurfaced = false;
 		player->isGrounded = true;
 		ground->playerAtGround = true;
 		return true;
@@ -181,7 +182,8 @@ bool CollisionManager::lineRectCheck(Player* player, glm::vec2 line1End, GroundS
 
 
 		player->stopJump(glm::vec2(player->getPosition().x, ground->getPosition().y - recHeight * 3 / 4));
-		player->isGrounded = true;
+		player->isGroundSurfaced = true;
+		player->isGrounded = false;
 		ground->playerAtGround = true;
 		return true;
 

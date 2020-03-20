@@ -21,7 +21,8 @@ Player::Player() : m_maxSpeed(5.0f)
 	//	"engine", sound_type::SOUND_MUSIC);
 
 	//TheSoundManager::Instance()->playMusic("engine", -1);
-
+	isGrounded = false;
+	isGroundSurfaced = false;
 
 }
 
@@ -63,7 +64,7 @@ void Player::update()
 	//glm::vec2 mouseVector = TheGame::Instance()->getMousePosition();
 
 
-	if (!isGrounded)
+	if (!isGrounded && !isGroundSurfaced)
 	{
 		setVelocity(glm::vec2(getVelocity().x, getVelocity().y + 0.5f));
 
