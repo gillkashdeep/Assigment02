@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iomanip>
 #include "InstScene.h"
+#include "GameOver.h"
 
 
 Game* Game::s_pInstance = 0;
@@ -159,6 +160,10 @@ void Game::changeSceneState(SceneState newState)
 		case SceneState::INST_SCENE:
 			m_currentScene = new InstScene();
 			std::cout << "inst scene activated" << std::endl;
+			break;
+		case SceneState::GAMEOVER:
+			m_currentScene = new GameOver();
+			std::cout << "gameover scene activated" << std::endl;
 			break;
 		case SceneState::END_SCENE:
 			m_currentScene = new EndScene();

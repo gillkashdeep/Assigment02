@@ -5,6 +5,7 @@
 #include "coin.h"
 #include "GroundSurface.h"
 #include "door.h"
+#include "Spike.h"
 
 
 Level1Scene::Level1Scene()
@@ -35,6 +36,10 @@ void Level1Scene::draw()
 	
 	if (!isCoinCollected_4)
 		m_pCoin->draw();
+
+	m_pSpike->draw();
+	m_pSpike_1->draw();
+	m_pLabelLife->draw();
 	
 	//m_pGroundSurface->draw();
 	m_pDoor->draw();
@@ -75,7 +80,7 @@ void Level1Scene::update()
 	m_pPlayer->isGrounded=playerIsGrounded();
 	m_pPlayer->update();
 
-	std::cout << "Height" << m_pPlayer->getPosition().y << std::endl;
+	//std::cout << "Height" << m_pPlayer->getPosition().y << std::endl;
 	
 	if(m_pPlayer->getPosition().x < 10)
 	{
@@ -138,6 +143,40 @@ void Level1Scene::update()
 
 
 	}
+
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pSpike))
+	{
+		TheSoundManager::Instance()->playSound("ls", 0);
+		//isPlayerReach = true;
+		life--;
+		m_pPlayer->setPosition(glm::vec2(30, 250));
+		if (life == 0)
+		{
+			
+			TheGame::Instance()->changeSceneState(SceneState::GAMEOVER);
+		}
+
+
+	}
+
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pSpike_1))
+	{
+		TheSoundManager::Instance()->playSound("ls", 0);
+		//isPlayerReach = true;
+		life--;
+		m_pPlayer->setPosition(glm::vec2(30, 250));
+
+		if (life == 0)
+		{
+		
+			TheGame::Instance()->changeSceneState(SceneState::GAMEOVER);
+		}
+
+
+	}
+	std::string temp = "Life:"+std::to_string(life);
+	m_pLabelLife->setText(temp);
+
 
 	
 	if(!isPlayerReach)
@@ -303,6 +342,15 @@ void Level1Scene::start()
 	m_pCoin_4->setPosition(glm::vec2(450, 300));
 	addChild(m_pCoin_4);
 
+
+	m_pSpike = new  Spike();
+	m_pSpike->setPosition(glm::vec2(380, 330));
+	addChild(m_pSpike);
+
+	m_pSpike_1 = new  Spike();
+	m_pSpike_1->setPosition(glm::vec2(150, 330));
+	addChild(m_pSpike_1);
+
 	m_pDoor = new  door();
 	m_pDoor->setPosition(glm::vec2(250.0f, 250.0f));
 	addChild(m_pDoor);
@@ -318,6 +366,15 @@ void Level1Scene::start()
 	m_pLabel1->setParent(this);
 	addChild(m_pLabel);
 
+	life = 3;
+	std::string temp = "Life:" + std::to_string(life);
+
+	m_pLabelLife = new Label(temp, "Consolas", 20, black,
+		glm::vec2(505.0f, 100.0f));
+	m_pLabelLife->setParent(this);
+	addChild(m_pLabelLife);
+	
+
 	m_pPlayer = new Player();
 	//m_pPlayer->setPosition(glm::vec2(30.0f, 250.0f));
 	addChild(m_pPlayer);
@@ -328,7 +385,9 @@ void Level1Scene::start()
 
 	TheSoundManager::Instance()->load("../Assets/audio/Picked Coin.wav", "yay", SOUND_SFX);
 	TheSoundManager::Instance()->load("../Assets/audio/Plug.ogg", "bg", SOUND_SFX);
-	TheSoundManager::Instance()->load("../Assets/audio/door-01.flac", "dr", SOUND_SFX);
+	TheSoundManager::Instance()->load("../Assets/audio/lose_s.wav", "ls", SOUND_SFX);
+
+	TheSoundManager::Instance()->load("../Assets/audio/door-01.wav", "dr", SOUND_SFX);
 
 	TheSoundManager::Instance()->playSound("bg", 1);
 

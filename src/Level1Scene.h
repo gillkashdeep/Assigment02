@@ -41,8 +41,11 @@ private:
 	DisplayObject* m_pCoin_2;
 	DisplayObject* m_pCoin_3;
 	DisplayObject* m_pCoin_4;
+	DisplayObject* m_pSpike;
+	DisplayObject* m_pSpike_1;
 	Label* m_pLabel;
 	Label* m_pLabel1;
+	Label* m_pLabelLife;
 	Player* m_pPlayer;
 
 	bool isCoinCollected;
@@ -55,6 +58,7 @@ private:
 	// private data member
 	glm::vec2 m_mousePosition;
 	int total;
+	int life;
 	
 };
 

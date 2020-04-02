@@ -15,6 +15,7 @@ enum GameObjectType {
 	INST_BUTTON,
 	GROUND,
 	COIN,
+	SPIKE,
 	GROUNDSURFACE,
 	NUM_OF_TYPES
 };
