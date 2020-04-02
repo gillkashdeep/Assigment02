@@ -17,6 +17,7 @@ EndScene::~EndScene()
 void EndScene::draw()
 {
 	m_Label->draw();
+	m_Label2->draw();
 	m_pStartButton->draw();
 }
 
@@ -92,7 +93,15 @@ void EndScene::start()
 	m_Label = new Label("PLAY AGAIN", "OpenSans-Semibold", 80, white, glm::vec2(300.0f, 50.0f));
 	m_Label->setParent(this);
 	addChild(m_Label);
+
+	std::string temp = "Your Score:" + std::to_string(TheGame::Instance()->gameScore);
+	
+	m_Label2 = new Label(temp, "OpenSans-Semibold", 80, white, glm::vec2(300.0f, 150.0f));
+	m_Label2->setParent(this);
+	addChild(m_Label2);
+	
 	m_pStartButton = new StartButton();
 	m_pStartButton->setPosition(glm::vec2(300.0f, 300.0f));
 	addChild(m_pStartButton);
+	
 }

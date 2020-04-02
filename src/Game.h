@@ -69,6 +69,8 @@ public:
 	void changeSceneState(SceneState newState);
 	void quit();
 
+	int gameScore;
+	
 private:
 	Game();
 	~Game();

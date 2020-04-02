@@ -146,7 +146,6 @@ bool CollisionManager::lineRectCheck(Player* player, glm::vec2 line1End, Ground*
 
 
 		player->stopJump(glm::vec2(player->getPosition().x, ground->getPosition().y - recHeight * 3 / 4));
-		player->isGroundSurfaced = false;
 		player->isGrounded = true;
 		ground->playerAtGround = true;
 		return true;
@@ -168,7 +167,7 @@ bool CollisionManager::lineRectCheck(Player* player, glm::vec2 line1End, GroundS
 	float rh = recHeight;
 
 	//TODO FIX THIS
-
+	//std::cout << "Player Grounded:" << std::endl;
 	// check if the line has hit any of the rectangle's sides
 	// uses the Line/Line function below
 	bool left = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx, ry + rh));
@@ -182,7 +181,7 @@ bool CollisionManager::lineRectCheck(Player* player, glm::vec2 line1End, GroundS
 
 
 		player->stopJump(glm::vec2(player->getPosition().x, ground->getPosition().y - recHeight * 3 / 4));
-		player->isGroundSurfaced = true;
+		//player->isGroundSurfaced = true;
 		player->isGrounded = false;
 		ground->playerAtGround = true;
 		return true;

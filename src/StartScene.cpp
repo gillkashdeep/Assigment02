@@ -27,6 +27,11 @@ void StartScene::update()
 {
 	m_pStartButton->setMousePosition(m_mousePosition);
 	m_pStartButton->ButtonClick();
+	TheSoundManager::Instance()->load("../Assets/audio/door-01.flac", "dr", SOUND_SFX);
+	if (m_pStartButton->ButtonClick() || m_pExitButton->ButtonClick() || m_pInstButton->ButtonClick())
+	{
+		TheSoundManager::Instance()->playSound("dr", 0);
+	}
 	m_pExitButton->setMousePosition(m_mousePosition);
 	m_pExitButton->ButtonClick();
 	m_pInstButton->setMousePosition(m_mousePosition);
@@ -110,6 +115,9 @@ void StartScene::handleEvents()
 // this function is used for initialization
 void StartScene::start()
 {
+
+	
+	
 	SDL_Color black = { 0, 0, 0, 255 };
 	m_pStartLabel = new Label("COMP397 - Assigment 2", "Consolas", 40, black, 
 		glm::vec2(Config::SCREEN_WIDTH * 0.5f, 100.0f));

@@ -24,6 +24,7 @@ public:
 	// getters
 	glm::vec2 getMousePosition();
 
+
 private:
 	// game objects
 
@@ -32,6 +33,8 @@ private:
 	DisplayObject* m_pDoor;
 	SDL_Renderer* renderer;
 	SDL_Window* window;
+
+	std::vector<Ground*> m_pNewGround;
 	
 	DisplayObject* m_pCoin;
 	DisplayObject* m_pCoin_1;
@@ -45,11 +48,13 @@ private:
 	bool isCoinCollected;
 	bool isCoinCollected_1;
 	bool isCoinCollected_2;
+	bool isCoinCollected_3;
+	bool isCoinCollected_4;
 	bool isPlayerReach;
 
 	// private data member
 	glm::vec2 m_mousePosition;
-	
+	int total;
 	
 };
 

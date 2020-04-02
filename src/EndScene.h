@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Label.h"
 #include "StartButton.h"
+#include "Level1Scene.h"
 
 class EndScene : public Scene
 {
@@ -24,6 +25,9 @@ public:
 private:
 	StartButton* m_pStartButton;
 	Label* m_Label;
+	Label* m_Label2;
+	
+
 	// private data member
 	glm::vec2 m_mousePosition;
 };
