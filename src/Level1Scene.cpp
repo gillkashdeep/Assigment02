@@ -54,14 +54,28 @@ void Level1Scene::update()
 	
 	for(Ground* ground : m_pNewGround)
 	{
-		auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 22);
-		Collision::lineRectCheck(m_pPlayer, bottomLine, ground, ground->getWidth(), ground->getHeight() + 35);
+
+		if(m_pPlayer->getPosition().y == 135.25)
+		{
+			std::cout << "cooooo" << std::endl;
+			auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 40);
+			Collision::lineRectCheck(m_pPlayer, bottomLine, ground, ground->getWidth(), ground->getHeight() + 41);
+		}
+		if (m_pPlayer->getPosition().y != 135)
+		{
+		
+			auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 20);
+
+			Collision::lineRectCheck(m_pPlayer, bottomLine, ground, ground->getWidth(), ground->getHeight() + 41);
+		}
+		
+		
 	}
 	
 	m_pPlayer->isGrounded=playerIsGrounded();
 	m_pPlayer->update();
 
-	std::cout << "Height" << m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 22 << std::endl;
+	std::cout << "Height" << m_pPlayer->getPosition().y << std::endl;
 	
 	if(m_pPlayer->getPosition().x < 10)
 	{
@@ -227,7 +241,7 @@ void Level1Scene::handleEvents()
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_w:
-				//m_pPlayer->jumping = false;
+				m_pPlayer->jumping = false;
 
 				break;
 
