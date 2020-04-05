@@ -149,11 +149,16 @@ void Level1Scene::update()
 		TheSoundManager::Instance()->playSound("ls", 0);
 		//isPlayerReach = true;
 		life--;
-		m_pPlayer->setPosition(glm::vec2(30, 250));
-		if (life == 0)
+		//m_pPlayer->setPosition(glm::vec2(30, 250));
+		if (life == 0 && total < 5)
 		{
 			
 			TheGame::Instance()->changeSceneState(SceneState::GAMEOVER);
+		}
+		if( life < 3 && total == 5)
+		{
+			TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
+
 		}
 
 
@@ -164,7 +169,7 @@ void Level1Scene::update()
 		TheSoundManager::Instance()->playSound("ls", 0);
 		//isPlayerReach = true;
 		life--;
-		m_pPlayer->setPosition(glm::vec2(30, 250));
+		//m_pPlayer->setPosition(glm::vec2(30, 250));
 
 		if (life == 0)
 		{
@@ -352,7 +357,7 @@ void Level1Scene::start()
 	addChild(m_pSpike_1);
 
 	m_pDoor = new  door();
-	m_pDoor->setPosition(glm::vec2(250.0f, 250.0f));
+	//m_pDoor->setPosition(glm::vec2(250.0f, 250.0f));
 	addChild(m_pDoor);
 
 	SDL_Color black = { 255, 255, 255, 255 };
@@ -380,12 +385,12 @@ void Level1Scene::start()
 	addChild(m_pPlayer);
 	
 	m_pPlayer->setPosition(glm::vec2(30, 250));
-	m_pGround->setPosition(glm::vec2(170, 200));
-	m_pGroundSurface->setPosition(glm::vec2(170, 350));
+	//m_pGround->setPosition(glm::vec2(170, 200));
+	//m_pGroundSurface->setPosition(glm::vec2(170, 350));
 
 	TheSoundManager::Instance()->load("../Assets/audio/Picked Coin.wav", "yay", SOUND_SFX);
 	TheSoundManager::Instance()->load("../Assets/audio/Plug.ogg", "bg", SOUND_SFX);
-	TheSoundManager::Instance()->load("../Assets/audio/lose_s.wav", "ls", SOUND_SFX);
+	TheSoundManager::Instance()->load("../Assets/audio/hit.wav", "ls", SOUND_SFX);
 
 	TheSoundManager::Instance()->load("../Assets/audio/door-01.wav", "dr", SOUND_SFX);
 
