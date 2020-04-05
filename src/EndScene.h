@@ -26,6 +26,8 @@ private:
 	StartButton* m_pStartButton;
 	Label* m_Label;
 	Label* m_Label2;
+	Label* m_Label3;
+	std::string state;
 	
 
 	// private data member

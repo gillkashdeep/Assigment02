@@ -17,10 +17,9 @@ Player::Player() : m_maxSpeed(5.0f)
 	setIsColliding(false);
 	setType(GameObjectType::PLAYER);
 
-	//TheSoundManager::Instance()->load("../Assets/audio/engine.ogg",
-	//	"engine", sound_type::SOUND_MUSIC);
+	TheSoundManager::Instance()->load("../Assets/audio/jump.wav",
+		"jj", sound_type::SOUND_MUSIC);
 
-	//TheSoundManager::Instance()->playMusic("engine", -1);
 
 
 }
@@ -102,6 +101,8 @@ void Player::clean()
 
 void Player::jump()
 {
+	TheSoundManager::Instance()->playMusic("jj", 0);
+
 	setVelocity(glm::vec2(getVelocity().x, -13));
 
 }

@@ -138,7 +138,7 @@ void Level1Scene::update()
 		TheSoundManager::Instance()->playSound("dr", 0);
 		isPlayerReach = true;
 		m_pLabel->setText(std::to_string(total));
-
+		
 		TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
 
 

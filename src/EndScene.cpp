@@ -18,6 +18,7 @@ void EndScene::draw()
 {
 	m_Label->draw();
 	m_Label2->draw();
+	m_Label3->draw();
 	m_pStartButton->draw();
 }
 
@@ -25,6 +26,18 @@ void EndScene::update()
 {
 	m_pStartButton->setMousePosition(m_mousePosition);
 	m_pStartButton->ButtonClick();
+	if (TheGame::Instance()->gameScore < 5)
+	{
+
+		m_Label3->setText("You Loss!");
+	}
+
+	if (TheGame::Instance()->gameScore == 5)
+	{
+		m_Label3->setText("You Win!");
+		
+	}
+
 }
 
 void EndScene::clean()
@@ -90,15 +103,25 @@ void EndScene::handleEvents()
 void EndScene::start()
 {
 	SDL_Color white = { 0, 0, 0, 0 };
-	m_Label = new Label("PLAY AGAIN", "OpenSans-Semibold", 80, white, glm::vec2(300.0f, 50.0f));
+	m_Label = new Label("PLAY AGAIN", "OpenSans-Semibold", 50, white, glm::vec2(300.0f, 50.0f));
 	m_Label->setParent(this);
 	addChild(m_Label);
 
+	SDL_Color yellow = { 0, 0, 0, 0 };
+	
 	std::string temp = "Your Score:" + std::to_string(TheGame::Instance()->gameScore);
 	
-	m_Label2 = new Label(temp, "OpenSans-Semibold", 80, white, glm::vec2(300.0f, 150.0f));
+	m_Label2 = new Label(temp, "OpenSans-Semibold", 50, white, glm::vec2(300.0f, 150.0f));
 	m_Label2->setParent(this);
 	addChild(m_Label2);
+
+
+	
+	
+
+	m_Label3 = new Label("State", "OpenSans-Semibold", 50, white, glm::vec2(300.0f, 100.0f));
+	m_Label3->setParent(this);
+	addChild(m_Label3);
 	
 	m_pStartButton = new StartButton();
 	m_pStartButton->setPosition(glm::vec2(300.0f, 300.0f));
