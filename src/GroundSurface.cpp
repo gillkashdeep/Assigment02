@@ -1,6 +1,8 @@
 #include "GroundSurface.h"
 #include "Game.h"
 
+
+//not using now created in previous version not deleting to avoid unneccesary errors
 GroundSurface::GroundSurface()
 {
 

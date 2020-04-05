@@ -1,6 +1,8 @@
 #include "door.h"
 #include "Game.h"
 
+////door in the game door baseclass
+
 door::door()
 {
 	TheTextureManager::Instance()->load("../Assets/textures/door.png",

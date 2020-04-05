@@ -1,6 +1,7 @@
 #include  "Ground.h"
 #include "Game.h"
 
+//platform baseclass used in level1
 Ground::Ground()
 {
 

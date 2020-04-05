@@ -1,6 +1,7 @@
 #include "InstructionButton.h"
 #include "Game.h"
 
+//used the functions and datamembers of super class button
 InstructionButton::InstructionButton()
 
 	:Button(

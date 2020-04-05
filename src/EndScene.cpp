@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iomanip>
 
+//end scene when lifes left 
 EndScene::EndScene()
 {
 	EndScene::start();

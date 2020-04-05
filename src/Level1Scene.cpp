@@ -7,7 +7,7 @@
 #include "door.h"
 #include "Spike.h"
 
-
+//Level1 scene main scene
 Level1Scene::Level1Scene()
 {
 	start();
@@ -40,18 +40,19 @@ void Level1Scene::draw()
 	m_pSpike->draw();
 	m_pSpike_1->draw();
 	m_pLabelLife->draw();
-	
-	//m_pGroundSurface->draw();
+
+
+	for (Ground* ground : m_pNewGround)
+	{
+		ground->draw();
+	}
 	m_pDoor->draw();
 	m_pLabel->draw();
 	m_pLabel1->draw();
 	if(!isPlayerReach)
 		m_pPlayer->draw();
 
-	for(Ground* ground:m_pNewGround)
-	{
-		ground->draw();
-	}
+	
 }
 
 void Level1Scene::update()
@@ -62,7 +63,7 @@ void Level1Scene::update()
 
 		if(m_pPlayer->getPosition().y == 135.25)
 		{
-			std::cout << "cooooo" << std::endl;
+		
 			auto bottomLine = glm::vec2(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y + m_pPlayer->getHeight() / 2 + 40);
 			Collision::lineRectCheck(m_pPlayer, bottomLine, ground, ground->getWidth(), ground->getHeight() + 41);
 		}

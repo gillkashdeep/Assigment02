@@ -1,6 +1,7 @@
 #include "GameOver.h"
 #include "Game.h"
 
+// when all the lifes lost 
 GameOver::GameOver()
 {
 	GameOver::start();

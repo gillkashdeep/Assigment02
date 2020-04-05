@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Game.h"
 
+//hurdles in the way created on Level1
 Spike::Spike()
 {
 	TheTextureManager::Instance()->load("../Assets/textures/spike.png",

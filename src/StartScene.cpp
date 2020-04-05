@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iomanip>
 
+
+//mainmenu scene
 StartScene::StartScene()
 {
 	StartScene::start();

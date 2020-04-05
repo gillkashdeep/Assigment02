@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "Game.h"
 
+//items in the game coins baseclass
 coin::coin()
 {
 
